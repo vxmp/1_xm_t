@@ -1,0 +1,63 @@
+{
+    "inbounds": [
+        {
+            "port": 8888,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "db539061-c182-425d-8e6f-ea175f30c14b"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "ws",
+                "wsSettings": {
+                  "path": "/2a08ab9b-b5ff-4b41-8e0e-54061c2b6e85"
+                }
+            }
+        }
+    ],
+
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct",
+            "settings": {}
+        },
+        {
+            "protocol": "socks",
+            "tag": "sockstor",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "127.0.0.1",
+                        "port": 9050
+                    }
+                ]
+            }
+        }
+    ],
+
+    "routing": {
+        "rules": [
+            {
+                "type": "field",
+                "outboundTag": "sockstor",
+                "domain": [
+                    "regexp:\\.onion$"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "blocked",
+                "domain": ["geosite:cn"]
+            },
+            {
+                "type": "field",
+                "outboundTag": "blocked",
+                "ip": ["geoip:cn"]
+            }
+        ]
+    }
+}
